@@ -8,6 +8,8 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
 // Explicit
+  final formKey = GlobalKey<FormState>();
+  String nameString, emailString, passwordString;
 
 // Method
 
@@ -23,6 +25,9 @@ class _RegisterState extends State<Register> {
         helperText: '่ใส่ชื่อType Your Name',
         hintText: 'English',
       ),
+      onSaved: (value) {
+        nameString = value.trim();
+      },
     );
   }
 
@@ -38,6 +43,9 @@ class _RegisterState extends State<Register> {
         helperText: '่Type Your Email',
         hintText: 'you@mail.com',
       ),
+      onSaved: (value) {
+        emailString = value.trim();
+      },
     );
   }
 
@@ -53,13 +61,20 @@ class _RegisterState extends State<Register> {
         helperText: '่Type Your Password',
         hintText: 'More 6 Charactor',
       ),
+      onSaved: (value) {
+        passwordString = value.trim();
+      },
     );
   }
 
   Widget registerButton() {
     return IconButton(
       icon: Icon(Icons.cloud_upload),
-      onPressed: () {},
+      onPressed: () {
+        print('You Click Upload');
+        formKey.currentState.save();
+        print('name = $nameString,email=$emailString,password=$passwordString');
+      },
     );
   }
 
@@ -71,13 +86,16 @@ class _RegisterState extends State<Register> {
         title: Text('Register'),
         actions: <Widget>[registerButton()],
       ),
-      body: ListView(
-        padding: EdgeInsets.all(50.0),
-        children: <Widget>[
-          nameText(),
-          emailText(),
-          passwordText(),
-        ],
+      body: Form(
+        key: formKey,
+        child: ListView(
+          padding: EdgeInsets.all(50.0),
+          children: <Widget>[
+            nameText(),
+            emailText(),
+            passwordText(),
+          ],
+        ),
       ),
     );
   }
