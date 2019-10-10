@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jee1rci/screens/my_service.dart';
 import 'package:jee1rci/screens/my_style.dart';
 
 class Register extends StatefulWidget {
@@ -102,7 +103,10 @@ class _RegisterState extends State<Register> {
       UserUpdateInfo userUpdateInfo = UserUpdateInfo();
       userUpdateInfo.displayName = nameString;
       response.updateProfile(userUpdateInfo);
-      
+      MaterialPageRoute materialPageRoute =
+          MaterialPageRoute(builder: (BuildContext context) => Myservice());
+      Navigator.of(context).pushAndRemoveUntil(
+          materialPageRoute, (Route<dynamic> route) => false);
     });
   }
 
