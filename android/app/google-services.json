@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "450833951741",
+    "firebase_url": "https://jeerci01.firebaseio.com",
+    "project_id": "jeerci01",
+    "storage_bucket": "jeerci01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450833951741:android:984c79627a1f9c524a0794",
+        "android_client_info": {
+          "package_name": "com.rcithailand.jee1rci"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "450833951741-0iibngmgqd4vieasoqhcbhjuu00ni272.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfeIpREDh9apW-7lsk6VKoQSy2TMGEcIY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "450833951741-0iibngmgqd4vieasoqhcbhjuu00ni272.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
