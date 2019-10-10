@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,12 +8,18 @@ import 'package:jee1rci/screens/my_style.dart';
 import 'package:jee1rci/screens/register.dart';
 
 class Home extends StatefulWidget {
+// Ex[licit
+
+//Method
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
 // Explicit
+  final formKey = GlobalKey<FormState>();
+  String emailString, passwordSring;
 
 //Method
 
@@ -39,8 +47,64 @@ class _HomeState extends State<Home> {
         'Sign In',
         style: TextStyle(color: Colors.white),
       ),
-      onPressed: () {},
+      onPressed: () {
+        formKey.currentState.save();
+        print('email = $emailString, password = $passwordSring');
+        checkAuthen();
+      },
     );
+  }
+
+  Future<void> checkAuthen() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    await firebaseAuth
+        .signInWithEmailAndPassword(email: emailString, password: passwordSring)
+        .then((response) {
+      MaterialPageRoute materialPageRoute =
+          MaterialPageRoute(builder: (BuildContext context) => Myservice());
+      Navigator.of(context).pushAndRemoveUntil(
+          materialPageRoute, (Route<dynamic> route) => false);
+    }).catchError((response) {
+      String title = response.code;
+      String message = response.message;
+      myAlert(title, message);
+    });
+  }
+
+  Widget showTitle(String title) {
+    return ListTile(
+      leading: Icon(
+        Icons.add_alert,
+        size: 48.0,
+        color: Colors.red,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+            color: Colors.red,
+            fontSize: MyStyle().h2,
+            fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  void myAlert(String title, String message) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: showTitle(title),
+            content: Text(message),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 
   Widget signUpButton() {
@@ -83,6 +147,9 @@ class _HomeState extends State<Home> {
           labelText: 'User :',
           labelStyle: TextStyle(color: MyStyle().textColor),
         ),
+        onSaved: (value) {
+          emailString = value.trim();
+        },
       ),
     );
   }
@@ -90,7 +157,7 @@ class _HomeState extends State<Home> {
   Widget passwordText() {
     return Container(
       width: 250.0,
-      child: TextField(
+      child: TextFormField(
         decoration: InputDecoration(
           icon: Icon(
             Icons.lock,
@@ -100,6 +167,9 @@ class _HomeState extends State<Home> {
           labelText: 'Password :',
           labelStyle: TextStyle(color: MyStyle().textColor),
         ),
+        onSaved: (value) {
+          passwordSring = value.trim();
+        },
       ),
     );
   }
@@ -137,18 +207,21 @@ class _HomeState extends State<Home> {
             ),
           ),
           child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                showLogo(),
-                showAppName(),
-                userText(),
-                passwordText(),
-                SizedBox(
-                  height: 8.0,
-                ),
-                showButton(),
-              ],
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  showLogo(),
+                  showAppName(),
+                  userText(),
+                  passwordText(),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                  showButton(),
+                ],
+              ),
             ),
           ),
         ),
