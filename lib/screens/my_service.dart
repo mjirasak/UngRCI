@@ -1,19 +1,102 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jee1rci/screens/home.dart';
+import 'package:jee1rci/screens/my_style.dart';
 
-class Myservice extends StatefulWidget {
+class MyService extends StatefulWidget {
   @override
-  _MyserviceState createState() => _MyserviceState();
+  _MyServiceState createState() => _MyServiceState();
 }
 
-class _MyserviceState extends State<Myservice> {
-//Explict
+class _MyServiceState extends State<MyService> {
+  // Explicit
 
-//Method
+  // Method
+  Widget myDrawer() {
+    return Drawer(
+      child: ListView(
+        children: <Widget>[
+          myHeadDrawer(),
+          menuShowListProduct(),
+          Divider(),
+          menuShowAddProduct(),
+          Divider(),
+        ],
+      ),
+    );
+  }
+
+  Widget menuShowListProduct() {
+    return ListTile(
+      leading: Icon(
+        Icons.filter_1,
+        size: 36.0,
+        color: Colors.purple,
+      ),
+      title: Text('List All Product'),
+      subtitle: Text('Show All Product in my Foctory'),onTap: (){
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
+  Widget menuShowAddProduct() {
+    return ListTile(
+      leading: Icon(
+        Icons.filter_2,
+        size: 36.0,
+        color: Colors.blue,
+      ),
+      title: Text('Add Product'),
+      subtitle: Text('Show Add Product Page'),
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
+  Widget myHeadDrawer() {
+    return DrawerHeader(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('images/wallpaper.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Column(
+        children: <Widget>[
+          showLogo(),
+          showAppName(),
+          showLogin(),
+        ],
+      ),
+    );
+  }
+
+  Widget showLogin() {
+    return Text('Login by ');
+  }
+
+  Widget showAppName() {
+    return Text(
+      'Ung RCI',
+      style: TextStyle(
+        color: MyStyle().textColor,
+        fontSize: MyStyle().h2,
+      ),
+    );
+  }
+
+  Widget showLogo() {
+    return Container(
+      height: 80.0,
+      child: Image.asset('images/logo.png'),
+    );
+  }
+
   Widget signOutButton() {
     return IconButton(
-      tooltip: 'ออก and Back Home',
+      tooltip: 'Sign Out and Back Home',
       icon: Icon(Icons.exit_to_app),
       onPressed: () {
         processSignOut();
@@ -23,11 +106,12 @@ class _MyserviceState extends State<Myservice> {
 
   Future<void> processSignOut() async {
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-    await firebaseAuth.signOut().then((response) {});
-    MaterialPageRoute materialPageRoute =
-        MaterialPageRoute(builder: (BuildContext context) => Home());
-    Navigator.of(context)
-        .pushAndRemoveUntil(materialPageRoute, (Route<dynamic> route) => false);
+    await firebaseAuth.signOut().then((response) {
+      MaterialPageRoute materialPageRoute =
+          MaterialPageRoute(builder: (BuildContext context) => Home());
+      Navigator.of(context).pushAndRemoveUntil(
+          materialPageRoute, (Route<dynamic> route) => false);
+    });
   }
 
   @override
@@ -38,6 +122,7 @@ class _MyserviceState extends State<Myservice> {
         actions: <Widget>[signOutButton()],
       ),
       body: Text('body'),
+      drawer: myDrawer(),
     );
   }
 }

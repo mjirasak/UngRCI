@@ -1,9 +1,10 @@
-import 'dart:math';
+
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jee1rci/screens/my_service.dart';
+
 import 'package:jee1rci/screens/my_style.dart';
 import 'package:jee1rci/screens/register.dart';
 
@@ -34,7 +35,7 @@ class _HomeState extends State<Home> {
     FirebaseUser firebaseUser = await firebaseAuth.currentUser();
     if (firebaseUser != null) {
       MaterialPageRoute materialPageRoute =
-          MaterialPageRoute(builder: (BuildContext context) => Myservice());
+          MaterialPageRoute(builder: (BuildContext context) => MyService());
       Navigator.of(context).pushAndRemoveUntil(
           materialPageRoute, (Route<dynamic> route) => false);
     }
@@ -61,7 +62,7 @@ class _HomeState extends State<Home> {
         .signInWithEmailAndPassword(email: emailString, password: passwordSring)
         .then((response) {
       MaterialPageRoute materialPageRoute =
-          MaterialPageRoute(builder: (BuildContext context) => Myservice());
+          MaterialPageRoute(builder: (BuildContext context) => MyService());
       Navigator.of(context).pushAndRemoveUntil(
           materialPageRoute, (Route<dynamic> route) => false);
     }).catchError((response) {
