@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jee1rci/screens/add_product.dart';
 import 'package:jee1rci/screens/home.dart';
+import 'package:jee1rci/screens/list_all_product.dart';
 import 'package:jee1rci/screens/my_style.dart';
 
 class MyService extends StatefulWidget {
@@ -10,6 +12,9 @@ class MyService extends StatefulWidget {
 
 class _MyServiceState extends State<MyService> {
   // Explicit
+
+  String loginString = '';
+  Widget currentWidget = ListAllProduct();
 
   // Method
   Widget myDrawer() {
@@ -34,7 +39,11 @@ class _MyServiceState extends State<MyService> {
         color: Colors.purple,
       ),
       title: Text('List All Product'),
-      subtitle: Text('Show All Product in my Foctory'),onTap: (){
+      subtitle: Text('Show All Product in my Foctory'),
+      onTap: () {
+        setState(() {
+         currentWidget = ListAllProduct() ;
+        });
         Navigator.of(context).pop();
       },
     );
@@ -50,6 +59,9 @@ class _MyServiceState extends State<MyService> {
       title: Text('Add Product'),
       subtitle: Text('Show Add Product Page'),
       onTap: () {
+        setState(() {
+         currentWidget = AddProduct(); 
+        });
         Navigator.of(context).pop();
       },
     );
@@ -121,7 +133,7 @@ class _MyServiceState extends State<MyService> {
         title: Text('My Service'),
         actions: <Widget>[signOutButton()],
       ),
-      body: Text('body'),
+      body: currentWidget,
       drawer: myDrawer(),
     );
   }
