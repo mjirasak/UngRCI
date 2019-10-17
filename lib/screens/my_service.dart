@@ -42,7 +42,7 @@ class _MyServiceState extends State<MyService> {
       subtitle: Text('Show All Product in my Foctory'),
       onTap: () {
         setState(() {
-         currentWidget = ListAllProduct() ;
+          currentWidget = ListAllProduct();
         });
         Navigator.of(context).pop();
       },
@@ -60,7 +60,7 @@ class _MyServiceState extends State<MyService> {
       subtitle: Text('Show Add Product Page'),
       onTap: () {
         setState(() {
-         currentWidget = AddProduct(); 
+          currentWidget = AddProduct();
         });
         Navigator.of(context).pop();
       },
@@ -129,6 +129,7 @@ class _MyServiceState extends State<MyService> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('My Service'),
         actions: <Widget>[signOutButton()],
